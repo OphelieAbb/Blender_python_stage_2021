@@ -7,7 +7,7 @@ import bgl
 from bpy.props import BoolProperty# import bool property
 
 # Authoriser import local pour le moment
-my_script_path = r"C:\Users\ophelie.abbonato\Documents\SMURFS\Script_Python\BLENDER_python"
+my_script_path = r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Script_Python\BLENDER_python"
 
 #Import script qui recupère la position des cameras
 if not my_script_path in sys.path:
@@ -31,12 +31,36 @@ import Data_personnage as perso_pos
 
 cam_object = bpy.context.scene.camera
 scene = bpy.context.scene
-ma_pass_des_familles = r"C:\Users\ophelie.abbonato\Documents\SMURFS"
+ma_pass_des_familles = r"D:\Experimentation_memoire\Ophelie_documents\SMURFS"
 
 
 ################################################################################
 #                                OPERATORS
 ################################################################################
+
+################################# STORYBOARD ##################################
+
+class ImportPanelSB(bpy.types.Operator):
+    bl_idname = "test.panel_storyboard"
+    bl_label  = "Create Story Board"
+    bl_description = "Import les panneaux de story board"
+
+
+    def execute(self,context):
+        bpy.ops.object.gpencil_add(type='STROKE')
+                
+                
+        return{'FINISHED'}
+
+class DrawingMode(bpy.types.Operator):
+    bl_idname = "test.draw_tool"
+    bl_label  = "Drawing mode"
+    bl_description = "Draw on panel"
+    
+    def execute(self,context):
+        bpy.ops.gpencil.paintmode_toggle()
+                
+        return{'FINISHED'}
 
 ################################# SCENE ##################################
 
@@ -46,7 +70,7 @@ class SCENE_SMF_EXPORT(bpy.types.Operator):
     
     def execute(self,context):
         
-        filepath = r"C:\Users\ophelie.abbonato\Documents\SMURFS\Scenes\FBX_all_scene\WholeScene.fbx"
+        filepath = r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Scenes\FBX_all_scene\WholeScene.fbx"
         bpy.ops.export_scene.fbx(filepath=filepath)
         
         return{'FINISHED'}
@@ -57,7 +81,7 @@ class SCENE_SMF_IMPORT(bpy.types.Operator):
     
     def execute(self,context):
         
-        filepath = r"C:\Users\ophelie.abbonato\Documents\SMURFS\Scenes\FBX_all_scene\WholeScene.fbx"
+        filepath = r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Scenes\FBX_all_scene\WholeScene.fbx"
         bpy.ops.import_scene.fbx(filepath=filepath)
         
         return{'FINISHED'}
@@ -88,112 +112,34 @@ class DECOR_SMF_IMPORT(bpy.types.Operator):
         
         #selection de l'icon import la scene 3d
         if bpy.context.scene.my_thumbnails == "Preview_Decor01.png":
-            
-                #Suprime le décor de la scène
-            for obj in bpy.context.scene.objects:
-                if obj.type == "MESH":
-                    bpy.ops.object.select_all(action='DESELECT')
-                    obj.select_set(True)
-                    bpy.ops.object.delete()
-                #supprime la collection(groupe) qui contient le décor, les collections dans Blender appartiennent à la famille des EMPTY
-                elif obj.type == "EMPTY":
-                    bpy.ops.object.select_all(action='DESELECT')
-                    obj.select_set(True)
-                    bpy.ops.object.delete()
-            
-            filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Decors\Scene_Smurf_Decor01.fbx"
+            filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Decors\Scene_Smurf_Decor01.fbx"
             bpy.ops.import_scene.fbx(filepath = filepath)
         
         if bpy.context.scene.my_thumbnails == "Preview_Decor02.png":
-            
-            #Suprime le décor de la scène
-            for obj in bpy.context.scene.objects:
-                if obj.type == "MESH":
-                    bpy.ops.object.select_all(action='DESELECT')
-                    obj.select_set(True)
-                    bpy.ops.object.delete()
-                #supprime la collection(groupe) qui contient le décor, les collections dans Blender appartiennent à la famille des EMPTY
-                elif obj.type == "EMPTY":
-                    bpy.ops.object.select_all(action='DESELECT')
-                    obj.select_set(True)
-                    bpy.ops.object.delete()
-            
-            filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Decors\Scene_Smurf_Decor02.fbx"
-            bpy.ops.import_scene.fbx(filepath = filepath)
-            
-        if bpy.context.scene.my_thumbnails == "Preview_Decor03.png":
-            
-            #Suprime le décor de la scène
-            for obj in bpy.context.scene.objects:
-                if obj.type == "MESH":
-                    bpy.ops.object.select_all(action='DESELECT')
-                    obj.select_set(True)
-                    bpy.ops.object.delete()
-                #supprime la collection(groupe) qui contient le décor, les collections dans Blender appartiennent à la famille des EMPTY
-                elif obj.type == "EMPTY":
-                    bpy.ops.object.select_all(action='DESELECT')
-                    obj.select_set(True)
-                    bpy.ops.object.delete()
-            
-            filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Decors\MRS_SET__gab__ChahutaInt_v001.fbx"
-            bpy.ops.import_scene.fbx(filepath = filepath)                 
+            filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Decors\Scene_Smurf_Decor02.fbx"
+            bpy.ops.import_scene.fbx(filepath = filepath)                
 
         return{'FINISHED'}
     
 
-#class DELETE_FBX(bpy.types.Operator):
-#    bl_label = "Delete Decor"
-#    bl_idname = "delete.decor"
-#    
-#    def execute(self,context):
-#        #Suprime le décor de la scène
-#        for obj in bpy.context.scene.objects:
-#            if obj.type == "MESH":
-#                bpy.ops.object.select_all(action='DESELECT')
-#                obj.select_set(True)
-#                bpy.ops.object.delete()
-#            #supprime la collection(groupe) qui contient le décor, les collections dans Blender appartiennent à la famille des EMPTY
-#            elif obj.type == "EMPTY":
-#                bpy.ops.object.select_all(action='DESELECT')
-#                obj.select_set(True)
-#                bpy.ops.object.delete()
-#                     
-#                
-#        return{'FINISHED'}
+class DELETE_FBX(bpy.types.Operator):
+    bl_label = "Delete Decor"
+    bl_idname = "delete.decor"
     
-#class ADD_SHADER(bpy.types.Operator):
-#    bl_label = "Add Shader Toon"
-#    bl_idname = "shader.decor"
-#    
-#    def execute(self,context):
-#        material_toon = bpy.data.materials.get("Toon02")
-#        material_outline = bpy.data.materials.get('Outline')
-
-#        #Ajoouter plusieurs shaders à un object (ici shder toon)
-
-#        objects_scene = []
-
-#        for obj in bpy.data.objects :
-#            if obj.type == "MESH":
-#                obj.select_set(True)
-#        #        bpy.ops.object.material_slot_remove()
-#                objects_scene.append(obj)
-
-
-#        for o in objects_scene:
-#            bpy.ops.object.material_slot_add()
-#            o.data.materials.append(material_toon)
-#            bpy.ops.object.material_slot_add()
-#            o.data.materials.append(material_outline)
-
-            #Modifier
-#            bpy.context.view_layer.objects.active = o
-#        #    bpy.context.space_data.context = 'MODIFIER'
-#            bpy.ops.object.modifier_add(type='SOLIDIFY')
-#            bpy.context.object.modifiers["Solidify"].use_flip_normals = True
-#            bpy.context.object.modifiers["Solidify"].material_offset = 1
-#            bpy.context.object.modifiers["Solidify"].thickness = 1
-            
+    def execute(self,context):
+        #Suprime le décor de la scène
+        for obj in bpy.context.scene.objects:
+            if obj.type == "MESH":
+                bpy.ops.object.select_all(action='DESELECT')
+                obj.select_set(True)
+                bpy.ops.object.delete()
+            #supprime la collection(groupe) qui contient le décor, les collections dans Blender appartiennent à la famille des EMPTY
+            elif obj.type == "EMPTY":
+                bpy.ops.object.select_all(action='DESELECT')
+                obj.select_set(True)
+                bpy.ops.object.delete()
+                     
+                
         return{'FINISHED'}
     
 #class DesimateMesh(bpy.types.Operator):
@@ -252,7 +198,7 @@ class ImportCamerasList(bpy.types.Operator):
    
     #Import dans la scène fbx qui contient la liste des cameras
     def execute(self,context):
-        filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Cameras\liste_shots\SMF_List_Cameras.fbx"
+        filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Cameras\liste_shots\SMF_List_Cameras.fbx"
         bpy.ops.import_scene.fbx(filepath = filepath)
 
         return{'FINISHED'}
@@ -272,7 +218,7 @@ class SaveListCameras(bpy.types.Operator):
             obj.select_set(False)
             if obj.type == "CAMERA":
                 obj.select_set(True)        
-        filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Cameras\liste_shots\SMF_List_Cameras.fbx"
+        filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Cameras\liste_shots\SMF_List_Cameras.fbx"
 
         bpy.ops.export_scene.fbx(filepath = filepath, use_selection=True)
         
@@ -300,12 +246,12 @@ class FileSaveCameras(bpy.types.Operator):
             return{'FINISHED'}
         
   
-        filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Cameras\Shots\Sh_{}".format(cam_object.name)
+        filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Cameras\Shots\Sh_{}".format(cam_object.name)
 
         bpy.ops.export_scene.fbx(filepath = filepath, use_selection=True)
 
         scene.render.image_settings.file_format ="PNG"
-        scene.render.filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Decors\icon_cam\Sh_{}".format(cam_object.name)
+        scene.render.filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Decors\icon_cam\Sh_{}".format(cam_object.name)
         bpy.ops.render.opengl(write_still=1)
             
         return{'FINISHED'}
@@ -354,7 +300,7 @@ class ImportCameras(bpy.types.Operator):
         if not cam_object:
             print("Pas de cam!!!!")
             return{'FINISHED'}
-        filepath =filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Cameras\Shots\Sh_{}".format(cam_object.name)
+        filepath =filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Cameras\Shots\Sh_{}".format(cam_object.name)
         bpy.ops.import_scene.fbx(filepath = filepath)
 
         return{'FINISHED'}
@@ -374,11 +320,11 @@ class RenderPngOperator(bpy.types.Operator):
         scene  = bpy.context.scene
         #for i in range(scene.frame_start, scene.frame_end):
             
-        list_files = glob.glob(r"C:\Users\ophelie.abbonato\Documents\SMURFS\SMF_112_Sq0001_Sh0001_image*.png")
+        list_files = glob.glob(r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Renders\PNG\SMF_112_Sq0001_Sh0001_image*.png")
         iteration = len(list_files)+1
         scene.render.image_settings.file_format ="PNG"
 #        scene.render.filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\shot{:03}.png".format(iteration)
-        scene.render.filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\SMF_112_Sq0001_Sh0001_image{:03}.png".format(iteration)
+        scene.render.filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Renders\PNG\SMF_112_Sq0001_Sh0001_image{:03}.png".format(iteration)
         bpy.ops.render.opengl(write_still=1)
         
         cam_pos.main()
@@ -401,10 +347,10 @@ class RenderJpegOperator(bpy.types.Operator):
         scene  = bpy.context.scene
         cam = context.scene.camera
         
-        list_files = glob.glob(r"C:\Users\ophelie.abbonato\Documents\SMURFS\SMF_112_Sq0001_Sh0001_image*.jpeg")
+        list_files = glob.glob(r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\JPEG\SMF_112_Sq0001_Sh0001_image*.jpeg")
         iteration = len(list_files)+1
         scene.render.image_settings.file_format ="JPEG"
-        scene.render.filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\SMF_112_Sq0001_Sh0001_image{:03}.jpeg".format(iteration)
+        scene.render.filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\JPEG\SMF_112_Sq0001_Sh0001_image{:03}.jpeg".format(iteration)
         
         bpy.ops.render.opengl(write_still=1)
         
@@ -655,7 +601,7 @@ class FileSave(bpy.types.Operator):
     
     def execute(self,context):
         
-#        filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Scene_Smurf.blend"
+#        filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Scene_Smurf.blend"
 #        bpy.ops.wm.save_as_mainfile(filepath=filepath)
 
         bpy.ops.wm.save_as_mainfile('INVOKE_AREA')
@@ -693,146 +639,109 @@ class VueCam(bpy.types.Operator):
         return{'FINISHED'}
 
 ################################# PANORAMA ##################################
-class PanoPointA(bpy.types.Operator):
-    bl_idname = "test.panorama_point_a"
-    bl_label  = "Start"
-    bl_description = "Le début de ton traveling"
+
+
+class PanoCamera(bpy.types.Operator):
+    bl_idname = "test.panorama_camera"
+    bl_label  = "Panoramic Camera"
+    bl_description = "Change ta camera en camera panoramique"
     
 
     def execute(self,context):
-        
-        bpy.ops.anim.keyframe_insert(type='BUILTIN_KSI_LocRot')
-        
-        return{'FINISHED'}
+        #CHANGE IN CYSLE RENDER
 
-class PanoPointB(bpy.types.Operator):
-    bl_idname = "test.panorama_point_b"
-    bl_label  = "End"
-    bl_description = "La fin de ton traveling"
-    
+        bpy.context.scene.render.engine = 'CYCLES'
 
-    def execute(self,context):
-        bpy.ops.anim.keyframe_insert_menu(type='BUILTIN_KSI_LocRot')
         
+
+        #CHAnGE CAMERA IN PANO
+
+        bpy.context.object.data.type = 'PANO'
+        bpy.context.object.data.cycles.panorama_type = 'EQUIRECTANGULAR'
+
+
+        #IMPORT HDRI
+
+        C = bpy.context
+        scn = C.scene
+
+        # Get the environment node tree of the current scene
+        node_tree = scn.world.node_tree
+        tree_nodes = node_tree.nodes
+
+        # Clear all nodes
+        tree_nodes.clear()
+
+        # Add Background node
+        node_background = tree_nodes.new(type='ShaderNodeBackground')
+
+        # Add Environment Texture node
+        node_environment = tree_nodes.new('ShaderNodeTexEnvironment')
+        # Load and assign the image to the node property
+        node_environment.image = bpy.data.images.load("//phalzer_forest_01_1k.exr") # Relative path
+        node_environment.location = -300,0
+
+        # Add Output node
+        node_output = tree_nodes.new(type='ShaderNodeOutputWorld')   
+        node_output.location = 200,0
+
+        # Link all nodes
+        links = node_tree.links
+        link = links.new(node_environment.outputs["Color"], node_background.inputs["Color"])
+        link = links.new(node_background.outputs["Background"], node_output.inputs["Surface"])
         
-        return{'FINISHED'}
-    
-class RenderPano(bpy.types.Operator):
-    bl_idname = "render.traveling"
-    bl_label  = "Render"  
-    
-    def execute(self,context):
-        cam_object = bpy.context.scene.camera
-        #for i in range(scene.frame_start, scene.frame_end):
+        #SUPPRIME OUTLINE SOLT
+
+        for obj in bpy.data.objects:
+            print(obj.name)
             
-        list_files = glob.glob(r"C:\Users\ophelie.abbonato\Documents\SMURFS\Renders\TRAVELING\{}{:03}*.png")
+            if obj.type == "MESH":
+
+                bpy.context.view_layer.objects.active = obj
+                bpy.ops.object.material_slot_remove('INVOKE_DEFAULT')
+                
+                
+        #Ne pas rendre le bg de l'HDRI
+        bpy.data.scenes["Scene"].render.film_transparent
+        
+        return{'FINISHED'}
+
+
+class PanoRender(bpy.types.Operator):
+    bl_idname = "test.panorama"
+    bl_label  = "Render Panorama"
+    bl_description = "Fait un rendu Panoramique / sauvegarde en png / incrémente à chaque sauvegarde"
+    
+
+    def execute(self,context):
+        # RENDER
+        scene = bpy.context.scene
+
+        list_files = glob.glob(r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Rendu_Panorama\SMF_PANO*.png")
+
         iteration = len(list_files)+1
-        scene.render.image_settings.file_format ="PNG"
-#        scene.render.filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\shot{:03}.png".format(iteration)
-        scene.render.filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Renders\TRAVELING\{}{:03}.png".format(cam_object.name, iteration)
-        bpy.ops.render.render(animation=True)      
 
-#class PanoCamera(bpy.types.Operator):
-#    bl_idname = "test.panorama_camera"
-#    bl_label  = "Panoramic Camera"
-#    bl_description = "Change ta camera en camera panoramique"
-#    
+        scene.render.image_settings.file_format = "PNG"
 
-#    def execute(self,context):
-#        #CHANGE IN CYSLE RENDER
+        scene.render.filepath = r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Rendu_Panorama\SMF_PANO{:03}.png".format(iteration)
 
-#        bpy.context.scene.render.engine = 'CYCLES'
+        bpy.ops.render.render(write_still=1)
+        
+        #tout redevient comme avant c'est à dire rendu EEVEE et on remet les bons solts mat
+        
+        bpy.context.scene.render.engine = 'BLENDER_EEVEE'
+        
+        for obj in bpy.data.objects:
+            print(obj.name)
+            
+            if obj.type == "MESH":
 
-#        
-
-#        #CHAnGE CAMERA IN PANO
-
-#        bpy.context.object.data.type = 'PANO'
-#        bpy.context.object.data.cycles.panorama_type = 'EQUIRECTANGULAR'
-
-
-#        #IMPORT HDRI
-
-#        C = bpy.context
-#        scn = C.scene
-
-#        # Get the environment node tree of the current scene
-#        node_tree = scn.world.node_tree
-#        tree_nodes = node_tree.nodes
-
-#        # Clear all nodes
-#        tree_nodes.clear()
-
-#        # Add Background node
-#        node_background = tree_nodes.new(type='ShaderNodeBackground')
-
-#        # Add Environment Texture node
-#        node_environment = tree_nodes.new('ShaderNodeTexEnvironment')
-#        # Load and assign the image to the node property
-#        node_environment.image = bpy.data.images.load("//phalzer_forest_01_1k.exr") # Relative path
-#        node_environment.location = -300,0
-
-#        # Add Output node
-#        node_output = tree_nodes.new(type='ShaderNodeOutputWorld')   
-#        node_output.location = 200,0
-
-#        # Link all nodes
-#        links = node_tree.links
-#        link = links.new(node_environment.outputs["Color"], node_background.inputs["Color"])
-#        link = links.new(node_background.outputs["Background"], node_output.inputs["Surface"])
-#        
-#        #SUPPRIME OUTLINE SOLT
-
-#        for obj in bpy.data.objects:
-#            print(obj.name)
-#            
-#            if obj.type == "MESH":
-
-#                bpy.context.view_layer.objects.active = obj
-#                bpy.ops.object.material_slot_remove('INVOKE_DEFAULT')
-#                
-#                
-#        #Ne pas rendre le bg de l'HDRI
-#        bpy.data.scenes["Scene"].render.film_transparent
-#        
-#        return{'FINISHED'}
-
-
-#class PanoRender(bpy.types.Operator):
-#    bl_idname = "test.panorama"
-#    bl_label  = "Render Panorama"
-#    bl_description = "Fait un rendu Panoramique / sauvegarde en png / incrémente à chaque sauvegarde"
-#    
-
-#    def execute(self,context):
-#        # RENDER
-#        scene = bpy.context.scene
-
-#        list_files = glob.glob(r"C:\Users\ophelie.abbonato\Documents\SMURFS\Rendu_Panorama\SMF_PANO*.png")
-
-#        iteration = len(list_files)+1
-
-#        scene.render.image_settings.file_format = "PNG"
-
-#        scene.render.filepath = r"C:\Users\ophelie.abbonato\Documents\SMURFS\Rendu_Panorama\SMF_PANO{:03}.png".format(iteration)
-
-#        bpy.ops.render.render(write_still=1)
-#        
-#        #tout redevient comme avant c'est à dire rendu EEVEE et on remet les bons solts mat
-#        
-#        bpy.context.scene.render.engine = 'BLENDER_EEVEE'
-#        
-#        for obj in bpy.data.objects:
-#            print(obj.name)
-#            
-#            if obj.type == "MESH":
-
-#                bpy.context.view_layer.objects.active = obj
-#                mat = bpy.data.materials.get("Outline")
-#                if mat is None:
-#                    # create material
-#                    mat = bpy.data.materials.new(name="Material")
-#        return{'FINISHED'}
+                bpy.context.view_layer.objects.active = obj
+                mat = bpy.data.materials.get("Outline")
+                if mat is None:
+                    # create material
+                    mat = bpy.data.materials.new(name="Material")
+        return{'FINISHED'}
 
 ################################# ANIMATION ##################################
 
@@ -892,7 +801,7 @@ class RenderAnimation(bpy.types.Operator):
         scene.render.image_settings.file_format ="FFMPEG"
         
         
-        scene.render.filepath =r"C:\Users\ophelie.abbonato\Documents\SMURFS\Renders\FFMPEG\animation_{}.ffmpeg".format(cam_object.name)
+        scene.render.filepath =r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Renders\FFMPEG\animation_{}.ffmpeg".format(cam_object.name)
         
         bpy.ops.render.opengl(animation=True)
 
@@ -903,6 +812,25 @@ class RenderAnimation(bpy.types.Operator):
 ################################################################################
 #                                INTERFACES
 ################################################################################
+#STORY BOARD
+class ParametersBoardPanel(bpy.types.Panel):
+
+    bl_label       = "Storyboard Parameters"
+    bl_idname      = "BOARD_PT_parameters"
+    bl_space_type  = 'VIEW_3D'
+    bl_region_type = "UI"
+    bl_category    = "Storyboard"
+    
+
+    def draw(self, context):
+        
+        layout = self.layout
+        row = layout.row()
+        row.operator("test.panel_storyboard", icon='VIEW_ORTHO')
+        row = layout.row() 
+        row.operator("test.draw_tool", icon = 'GREASEPENCIL')
+
+
 #SCENE
 class ParametersScenePanel(bpy.types.Panel):
 
@@ -910,7 +838,7 @@ class ParametersScenePanel(bpy.types.Panel):
     bl_idname      = "SCENE_PT_parameters"
     bl_space_type  = 'VIEW_3D'
     bl_region_type = "UI"
-    bl_category    = "Bank Set"
+    bl_category    = "Storyboard"
     
 
     def draw(self, context):
@@ -929,7 +857,7 @@ class PreviewsAssetPanel(bpy.types.Panel):
     bl_idname      = "OBJECT_PT_previews"
     bl_space_type  = 'VIEW_3D'
     bl_region_type = "UI"
-    bl_category    = "Bank Set"
+    bl_category    = "Storyboard"
     
 
     def draw(self, context):
@@ -946,9 +874,8 @@ class PreviewsAssetPanel(bpy.types.Panel):
         row.label(text="You selected: " + bpy.context.scene.my_thumbnails)
         row = layout.row()
         row.operator("decor.library_assets", icon='IMPORT')
-#        row.operator("delete.decor", icon = 'TRASH')
+        row.operator("delete.decor", icon= 'TRASH')
         row = layout.row()
-#        row.operator("shader.decor", icon = 'MATERIAL')
 #        row.operator("object.decimate_mesh")
 #        row = layout.row()
 #        row.operator("object.decimate_delete")
@@ -963,7 +890,7 @@ class ParametersCamerasPanel(bpy.types.Panel):
     bl_idname      = "CAMERAS_PT_parameters"
     bl_space_type  = 'VIEW_3D'
     bl_region_type = "UI"
-    bl_category    = "Bank Set"
+    bl_category    = "Storyboard"
     
     def draw(self,context):
         layout = self.layout
@@ -1021,7 +948,7 @@ class PreviewsCamerasPanel(bpy.types.Panel):
     bl_idname      = "CAMERAS_PT_previews"
     bl_space_type  = 'VIEW_3D'
     bl_region_type = "UI"
-    bl_category    = "Bank Set"
+    bl_category    = "Storyboard"
     
     def draw(self,context):
         layout = self.layout
@@ -1063,7 +990,7 @@ class NavigationPanel(bpy.types.Panel):
     bl_idname      = "NAVIGATION_PT_previews"
     bl_space_type  = 'VIEW_3D'
     bl_region_type = "UI"
-    bl_category    = "Bank Set"
+    bl_category    = "Storyboard"
     
 
     def draw(self, context):
@@ -1085,7 +1012,7 @@ class NavigationPanel(bpy.types.Panel):
         row = layout.row()
         row.operator("screen.focus")
 
-#PANORAMA
+
 
 class PanoramaPanel(bpy.types.Panel):
 
@@ -1093,26 +1020,15 @@ class PanoramaPanel(bpy.types.Panel):
     bl_idname      = "PANO_PT_render"
     bl_space_type  = 'VIEW_3D'
     bl_region_type = "UI"
-    bl_category    = "Bank Set"
+    bl_category    = "Storyboard"
     
     def draw(self, context):
         
         layout = self.layout
-        row = layout.row()
-        row.operator("test.animation", icon = "TIME")
-        row = layout.row()
-        row.operator("test.panorama_point_a",icon="VIEW_CAMERA")
-        row.operator("test.panorama_point_b",icon="VIEW_CAMERA")
-        
-        col = layout.column(align=True)
-        
-        col.separator()
-        col.prop(context.scene,"frame_start")
-        col.prop(context.scene,"frame_end")
-        col.separator()
         
         row = layout.row()
-        row.operator("render.traveling")
+        row.operator("test.panorama_camera",icon="VIEW_CAMERA")
+        row.operator("test.panorama",icon="MOD_THICKNESS")
 
 #ANIMATION
 class AnimationPanel(bpy.types.Panel):
@@ -1121,7 +1037,7 @@ class AnimationPanel(bpy.types.Panel):
     bl_idname      = "Animation_PT_cam"
     bl_space_type  = 'VIEW_3D'
     bl_region_type = "UI"
-    bl_category    = "Bank Set"
+    bl_category    = "Storyboard"
     
     def draw(self, context):
         
@@ -1170,7 +1086,7 @@ def generate_previews():
 
 classes = (
     DECOR_SMF_IMPORT,
-#    DELETE_FBX,
+    DELETE_FBX,
     DELETE_CAMERA,
     PreviewsAssetPanel,
     PreviewsCamerasPanel,
@@ -1193,10 +1109,8 @@ classes = (
 #    DesimateMesh,
 #    DesimateDelete,
     PanoramaPanel,
-    PanoPointA,
-    PanoPointB,
-#    PanoRender,
-#    PanoCamera,
+    PanoRender,
+    PanoCamera,
     ModalDrawOperator,
     InsertKeyframe,
     DeleteKeyframe,
@@ -1208,8 +1122,9 @@ classes = (
     SCENE_SMF_EXPORT,
     ParametersScenePanel,
     SCENE_SMF_IMPORT,
-    RenderPano
-#    ADD_SHADER
+    ParametersBoardPanel,
+    ImportPanelSB,
+    DrawingMode
     )
 
     
@@ -1226,7 +1141,7 @@ def register():
     import bpy.utils.previews
     pcoll = bpy.utils.previews.new()
 
-    my_script_path = r"C:\Users\ophelie.abbonato\Documents\SMURFS\Decors"
+    my_script_path = r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Decors"
 
 
     pcoll.images_location = os.path.join(my_script_path, "icons")
@@ -1249,7 +1164,7 @@ def register():
         )
 ################################# CAMERAS ################################## 
 
-    my_cam_path = r"C:\Users\ophelie.abbonato\Documents\SMURFS\Decors"     
+    my_cam_path = r"D:\Experimentation_memoire\Ophelie_documents\SMURFS\Decors"     
     
     pcoll.images_location = os.path.join(my_script_path, "icon_cam")
     
@@ -1302,7 +1217,9 @@ def unregister():
 
 
 if __name__ == "__main__":
+    
     register()
     
+
     # The menu can also be called from scripts
 #    bpy.ops.wm.call_menu(name=MESH_PREVIEW_menu.bl_idname)
